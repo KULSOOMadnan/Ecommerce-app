@@ -62,11 +62,11 @@ function ProductsImages({ items } : ProductsImagesProps) {
           <div
             className="w-1/4 h-32 relative mt-8 gap-4 cursor-pointer "
             key={item._id}
-            onClick={() => setIndex(i)}
+            onClick={() => setIndex(index)}
           >
-               {items[index].image ? (
+               {items[i].image ? (
           <Image
-            src={items[index].image.url}
+            src={items[i].image.url}
             alt=""
             fill
             sizes="30vw"
