@@ -1,5 +1,5 @@
 import { createClient, OAuthStrategy } from "@wix/sdk";
-import { request } from "http";
+
 import { NextRequest, NextResponse } from "next/server";
 
 export const middleware = async (request : NextRequest) => {

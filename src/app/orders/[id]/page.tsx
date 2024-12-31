@@ -10,8 +10,9 @@ const OrderPage = async ({ params }: { params: { id: string } }) => {
 
   let order;
   try {
-    order = await wixClient.orders.getOrder(id);
+    order = await wixClient?.orders.getOrder(id);
   } catch (err) {
+    console.log(err)
     return notFound();
   }
 
@@ -22,36 +23,36 @@ const OrderPage = async ({ params }: { params: { id: string } }) => {
       <div className="mt-12 flex flex-col gap-6">
         <div className="">
           <span className="font-medium">Order Id: </span>
-          <span>{order._id}</span>
+          <span>{order?._id}</span>
         </div>
         <div className="">
           <span className="font-medium">Receiver Name: </span>
           <span>
-            {order.billingInfo?.contactDetails?.firstName + " "}
-            {order.billingInfo?.contactDetails?.lastName}
+            {order?.billingInfo?.contactDetails?.firstName + " "}
+            {order?.billingInfo?.contactDetails?.lastName}
           </span>
         </div>
         <div className="">
           <span className="font-medium">Receiver Email: </span>
-          <span>{order.buyerInfo?.email}</span>
+          <span>{order?.buyerInfo?.email}</span>
         </div>
         <div className="">
           <span className="font-medium">Price: </span>
-          <span>{order.priceSummary?.subtotal?.amount}</span>
+          <span>{order?.priceSummary?.subtotal?.amount}</span>
         </div>
         <div className="">
           <span className="font-medium">Payment Status: </span>
-          <span>{order.paymentStatus}</span>
+          <span>{order?.paymentStatus}</span>
         </div>
         <div className="">
           <span className="font-medium">Order Status: </span>
-          <span>{order.status}</span>
+          <span>{order?.status}</span>
         </div>
         <div className="">
           <span className="font-medium">Delivery Address: </span>
           <span>
-            {order.billingInfo?.address?.addressLine1 + " "}
-            {order.billingInfo?.address?.city}
+            {order?.billingInfo?.address?.addressLine1 + " "}
+            {order?.billingInfo?.address?.city}
           </span>
         </div>
       </div>

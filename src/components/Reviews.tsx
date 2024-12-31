@@ -1,12 +1,38 @@
 import Image from "next/image";
+type ReviewMedia = {
+  id: string;
+  url: string;
+};
+
+type ReviewCustomer = {
+  avatar_url: string;
+  display_name: string;
+};
+
+type Review = {
+  id: string;
+  rating: number;
+  heading?: string;
+  body?: string;
+  customer: ReviewCustomer;
+  media: ReviewMedia[];
+};
+
+type ReviewsResponse = {
+  data: Review[];
+};
+
 
 const Reviews = async ({ productId }: { productId: string }) => {
   const reviewRes = await fetch(
     `https://api.fera.ai/v3/public/reviews?product.id=${productId}&public_key=${process.env.NEXT_PUBLIC_FERA_ID}`
   );
-  const reviews = await reviewRes.json();
+  if (!reviewRes.ok) {
+    throw new Error("Failed to fetch reviews");
+  }
+  const reviews : ReviewsResponse = await reviewRes.json();
 
-  return reviews.data.map((review: any) => (
+  return reviews.data.map((review : Review) => (
     <div className="flex flex-col gap-4" key={review.id}>
       {/* USER */}
       <div className="flex items-center gap-4 font-medium">
@@ -29,7 +55,7 @@ const Reviews = async ({ productId }: { productId: string }) => {
       {review.heading && <p>{review.heading}</p>}
       {review.body && <p>{review.body}</p>}
       <div className="">
-        {review.media.map((media: any) => (
+        {review.media.map((media) => (
           <Image
             src={media.url}
             key={media.id}

@@ -31,7 +31,7 @@ const Navbar = () => {
           </Link>
           <div className="hidden xl:flex gap-4">
           <Link href="/" className="">Home</Link>
-          <Link href="/" className="">Shop</Link>
+          <Link href="/list" className="">Shop</Link>
           <Link href="/" className="">Deals</Link>
           <Link href="/" className="">About</Link>
           <Link href="/" className="">Contact</Link>

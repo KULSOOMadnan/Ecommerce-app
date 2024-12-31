@@ -3,8 +3,7 @@
 import { useWixClient } from "@/hooks/useWixClient";
 import { LoginState } from "@wix/sdk";
 import Cookies from "js-cookie";
-import { usePathname, useRouter } from "next/navigation";
-import ReCAPTCHA from "react-google-recaptcha";
+import {useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 enum MODE {
@@ -25,7 +24,7 @@ function LoginPage() {
   }
   const [mode, setMode] = useState<MODE>(MODE.LOGIN);
   const [username, setUsername] = useState<string>("");
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  // const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [email, setEmail] = useState<string>("");
   const [emailCode, setEmailCode] = useState<string>("");
   const [password, setPassword] = useState<string>(""); // Added password state
@@ -51,7 +50,7 @@ function LoginPage() {
       ? "Reset"
       : "verify";
 
-  const pathname = usePathname();
+  // const pathname = usePathname();
 
   // const handleCaptchaChange = (token: string | null) => {
   //   console.log("Captcha token:", token);

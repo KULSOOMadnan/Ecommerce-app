@@ -1,17 +1,17 @@
 "use client";
 
-import { useCartStore } from "@/hooks/useCart";
+import { useCartStore } from "@/hooks/useCartStore";
 import { useWixClient } from "@/hooks/useWixClient";
 import Image from "next/image";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { media as wix } from "@wix/sdk";
-import { error } from "console";
 import { currentCart } from "@wix/ecom";
 
 function CartModel() {
   const wixClient = useWixClient();
   // const cartItems = true;
-  const { cart, isLoading, removeItem } = useCartStore();
+  const { cart, isLoading, removeItem , subtotal} = useCartStore();
+  
 
   const handleCheckOut = async () => {
     try {
@@ -36,6 +36,7 @@ function CartModel() {
     }
   };
 
+
   // useEffect(() => {
   //   const getcard = async () => {
   //     const response = await wixClient.currentCart.getCurrentCart();
@@ -44,7 +45,7 @@ function CartModel() {
   //   getcard();
   // }, [wixClient]);
 
-  console.log(cart)
+  console.log("card itesm",cart)
 
   return (
     <div className="w-max absolute p-4 rounded-md shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white top-12 right-0 flex flex-col gap-6 z-20 ">
@@ -110,7 +111,7 @@ function CartModel() {
           <div className="">
             <div className="flex items-center justify-between font-semibold">
               <span className=""> SubTotal</span>
-              <span className=""> ${cart.subtotal.amount }</span>
+              <span className=""> ${subtotal}</span>
             </div>
             <p className="text-gray-500 text-s mt-2 mb-4">
               Lorem ipsum dolor sit, amet consectetur adipisicing el

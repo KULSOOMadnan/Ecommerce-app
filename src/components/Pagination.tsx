@@ -6,7 +6,7 @@ import React from "react";
 interface PAGINATION {
   currentPage: number;
   hasPrev: boolean;
-  hasNext: Boolean;
+  hasNext: boolean;
 }
 
 function Pagination({ currentPage, hasPrev, hasNext }: PAGINATION) {

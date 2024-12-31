@@ -1,24 +1,35 @@
 import Add from "@/components/Add";
 import ProductInfo from "@/components/ProductInfo";
-import ProductList from "@/components/ProductList";
+// import ProductList from "@/components/ProductList";
 import ProductsImages from "@/components/ProductsImages";
-import Products from "@/components/ProductsImages";
-import Reviews from "@/components/Reviews";
+// import Products from "@/components/ProductsImages";
+// import Reviews from "@/components/Reviews";
 import { wixClientServer } from "@/lib/wixClientServer";
-import { products } from "@wix/stores";
+// import { products } from "@wix/stores";
 import { notFound } from "next/navigation";
-import React, { Suspense } from "react";
+interface Section {
+  _id?: string  ;
+  title?: string ; 
+  description?: string;
+}
+
+interface MediaItem {
+  _id: string;
+  image: {
+    url: string;
+  };
+}
 
 async function SinglePage({ params }: { params: { slug: string } }) {
   const wixClient = await wixClientServer();
 
-  const products = await wixClient.products
+  const products = await wixClient?.products
     .queryProducts()
     .eq("slug", params.slug)
     // .limit(limit || Product_limit)
     .find();
 
-  if (!products.items[0]) {
+  if (!products?.items[0]) {
     return notFound();
   }
   const product = products.items[0];
@@ -27,7 +38,11 @@ async function SinglePage({ params }: { params: { slug: string } }) {
     <div className=" px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 flex flex-col lg:flex-row gap-16">
       {/* IMAGE */}
       <div className="w-full lg:w-1/2 lg:sticky top-20 h-max ">
-        <ProductsImages items={product.media?.items} />
+      
+        {/* <ProductsImages items={product.media?.items } /> */}
+        <ProductsImages items={product.media?.items as MediaItem[] || []} />
+
+        
       </div>
       {/* Text */}
       <div className="w-full lg:w-1/2 flex flex-col gap-6  ">
@@ -59,7 +74,7 @@ async function SinglePage({ params }: { params: { slug: string } }) {
         )}
 
         <div className="bg-gray-100 h-[2px]" />
-        {product.additionalInfoSections?.map((section: any) => (
+        {product.additionalInfoSections?.map((section: Section) => (
           <div className="text-sm" key={section._id}>
             <h4 className="font-medium mb-4">{section.title}</h4>
             <p className="">{section.description} </p>

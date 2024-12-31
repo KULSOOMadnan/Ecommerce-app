@@ -3,11 +3,7 @@
 import Categories from "@/components/Categories";
 import ProductList from "@/components/ProductList";
 import Slider from "@/components/Slider";
-import { WixClintContext } from "@/context/WicContext";
-import { useWixClient } from "@/hooks/useWixClient";
-import { wixClientServer } from "@/lib/wixClientServer";
-import Image from "next/image";
-import { Suspense, useContext, useEffect } from "react";
+import { Suspense} from "react";
 
 export default async function Home() {
   // const wixClient = useWixClient()

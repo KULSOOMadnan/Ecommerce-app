@@ -4,11 +4,22 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import DOMPurify from "isomorphic-dompurify";
-import chalk from "chalk";
-import { log } from "console";
+
+
 import Pagination from "./Pagination";
 
 const Product_limit = 20;
+
+interface SearchParams {
+  name?: string;
+  type?: string;
+  min?: number;
+  max?: number;
+  page?: string;
+  sort? : string
+  cat?: string;
+}
+
 async function ProductList({
   categoryId,
   limit,
@@ -16,10 +27,10 @@ async function ProductList({
 }: {
   categoryId: string;
   limit?: number;
-  searchParams?: any;
+  searchParams?: SearchParams;
 }) {
   const wixClient = await wixClientServer();
-  const productQuery = wixClient.products
+  const productQuery = wixClient?.products
     .queryProducts()
     .startsWith("name", searchParams?.name || "")
     .eq("collectionIds", categoryId)
@@ -38,22 +49,24 @@ async function ProductList({
 
   let res;
   if (searchParams?.sort) {
-    const [sortType, sortBy] = searchParams.sort.split(" ");
+    // const [sortType, sortBy] = searchParams.sort.split(" ") 
+    const [sortType, sortBy] = searchParams.sort.split(" ") as [string, "_id" | "name" | "slug" | "sku" | "productType" | "price" | "priceData.price" | "numericId" | "lastUpdated"];
+    ;
 
     if (sortType === "asc") {
-      res = await productQuery.ascending(sortBy).find();
+      res = await productQuery?.ascending(sortBy).find();
     } else if (sortType === "desc") {
-      res = await productQuery.descending(sortBy).find();
+      res = await productQuery?.descending(sortBy).find();
     } else {
-      res = await productQuery.find();
+      res = await productQuery?.find();
     }
   } else {
-    res = await productQuery.find();
+    res = await productQuery?.find();
   }
 
   return (
     <div className="flex mt-12 gap-x-8 gap-y-16 justify-between flex-wrap">
-      {res.items.map((product: products.Product) => (
+      {res?.items.map((product: products.Product) => (
         <Link
           href={"/" + product.slug}
           className="w-full flex flex-col gap-4 sm:w-[45%] lg:w-[22%]"
@@ -89,7 +102,7 @@ async function ProductList({
               dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(
                   product.additionalInfoSections?.find(
-                    (section: any) => section.title === "shortDesc"
+                    (section:  { title?: string; description?: string }) => section.title === "shortDesc"
                   )?.description || ""
                 ),
               }}
@@ -103,7 +116,7 @@ async function ProductList({
       ))}
       {searchParams?.cat || searchParams?.name ? (
         <Pagination
-          currentPage={res.currentPage || 0}
+          currentPage={res?.currentPage || 0}
           hasPrev={res.hasPrev()}
           hasNext={res.hasNext()}
         />

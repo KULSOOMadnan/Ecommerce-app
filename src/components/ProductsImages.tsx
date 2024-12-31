@@ -22,43 +22,65 @@ import React, { useState } from "react";
 //   },
 // ];
 
-function ProductsImages({items} : {items : any | undefined }) {
+interface MediaItem {
+  _id: string;
+  image: {
+    url: string;
+  };
+}
+
+// Props interface for ProductsImages component
+interface ProductsImagesProps {
+  items: MediaItem[] | undefined; // items is an array of MediaItem objects
+}
+function ProductsImages({ items } : ProductsImagesProps) {
+  console.log("Items Data",items)
   const [index, setIndex] = useState(0);
+
+   // Check if items are undefined or empty, return a message
+   if (!items || items.length === 0) {
+    return <div>No images available</div>;
+  }
+
   return (
     <>
-   
       <div className="h-[500px] relative">
-        <Image
-          src={items[index].image?.url}
-          alt=""
-          fill
-          sizes="30vw"
-          className="object-cover rounded-md"
-        />
+      {items[index].image ? (
+          <Image
+            src={items[index].image.url}
+            alt=""
+            fill
+            sizes="30vw"
+            className="object-cover rounded-md"
+          />
+        ) : (
+          <div>No image available</div>
+        )}
       </div>
       <div className="flex md:flex-row justify-between gap-4 mt-8 ">
-          {items.map((item : any, i : number) => (
-            <div
-              className="w-1/4 h-32 relative mt-8 gap-4 cursor-pointer "
-              key={item._id}
-              onClick={() => setIndex(i)}
-            >
-              <Image
-                src={item.image?.url}
-                alt=""
-                fill
-                sizes="30vw"
-                className="object-cover rounded-md"
-              />
-            </div>
-          ))}
-        
+        {items.map((item, i) => (
+          <div
+            className="w-1/4 h-32 relative mt-8 gap-4 cursor-pointer "
+            key={item._id}
+            onClick={() => setIndex(i)}
+          >
+               {items[index].image ? (
+          <Image
+            src={items[index].image.url}
+            alt=""
+            fill
+            sizes="30vw"
+            className="object-cover rounded-md"
+          />
+        ) : (
+          <div>No image available</div>
+        )}
+          </div>
+        ))}
       </div>
-      </>
-    
+    </>
   );
-};
+}
 
 export default ProductsImages;
 
-      
