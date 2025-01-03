@@ -10,7 +10,7 @@ const slides = [
     title: "Summer Sale Collection",
     description: "Sale Up to 50% off!",
     img: "https://images.pexels.com/photos/5119521/pexels-photo-5119521.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    url: "/",
+    url: "/list",
     bg: "bg-gradient-to-r from-yellow-50 tp-pink-50",
   },
   {
@@ -18,7 +18,7 @@ const slides = [
     title: "Winter Sale Collections",
     description: "Sale! Up to 50% off!",
     img: "https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=800",
-    url: "/",
+    url: "/list",
     bg: "bg-gradient-to-r from-pink-50 to-blue-50",
   },
   {
@@ -26,7 +26,7 @@ const slides = [
     title: "Spring Sale Collections",
     description: "Sale! Up to 50% off!",
     img: "https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=80https://images.pexels.com/photos/20236324/pexels-photo-20236324.jpeg?cs=srgb&dl=pexels-marlonretratos-20236324.jpg&fm=jpg&_gl=1*11n42hg*_ga*NTk2NTExMTM3LjE3MzEwMTA5Njg.*_ga_8JE65Q40S6*MTczMTA2MjExNi4zLjEuMTczMTA2MjczMC4wLjAuMA..",
-    url: "/",
+    url: "/list",
     bg: "bg-gradient-to-r from-blue-50 to-yellow-50",
   },
 ];

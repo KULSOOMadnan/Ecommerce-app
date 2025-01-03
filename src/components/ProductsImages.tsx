@@ -66,7 +66,7 @@ function ProductsImages({ items } : ProductsImagesProps) {
           >
                {items[i].image ? (
           <Image
-            src={items[i].image.url}
+            src={items[index].image.url}
             alt=""
             fill
             sizes="30vw"
