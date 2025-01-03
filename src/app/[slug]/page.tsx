@@ -5,11 +5,12 @@ import ProductsImages from "@/components/ProductsImages";
 // import Products from "@/components/ProductsImages";
 // import Reviews from "@/components/Reviews";
 import { wixClientServer } from "@/lib/wixClientServer";
+import DOMPurify from "isomorphic-dompurify";
 // import { products } from "@wix/stores";
 import { notFound } from "next/navigation";
 interface Section {
-  _id?: string  ;
-  title?: string ; 
+  _id?: string;
+  title?: string;
   description?: string;
 }
 
@@ -38,16 +39,19 @@ async function SinglePage({ params }: { params: { slug: string } }) {
     <div className=" px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 flex flex-col lg:flex-row gap-16">
       {/* IMAGE */}
       <div className="w-full lg:w-1/2 lg:sticky top-20 h-max ">
-      
         {/* <ProductsImages items={product.media?.items } /> */}
-        <ProductsImages items={product.media?.items as MediaItem[] || []} />
-
-        
+        <ProductsImages items={(product.media?.items as MediaItem[]) || []} />
       </div>
       {/* Text */}
       <div className="w-full lg:w-1/2 flex flex-col gap-6  ">
         <h1 className="text-4xl font-medium ">{product.name}</h1>
-        <p className="text-gray-500">{product.description}</p>
+        {/* <p className="text-gray-500"  >{product.description}</p> */}
+        <p
+          className="text-gray-500"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(product.description || ""),
+          }}
+        />
         <div className="bg-gray-100 h-[2px]" />
         {product.price?.price === product.price?.discountedPrice ? (
           <h2 className="text-2xl font-medium">${product.price?.price}</h2>
@@ -70,7 +74,11 @@ async function SinglePage({ params }: { params: { slug: string } }) {
             productOptions={product.productOptions}
           />
         ) : (
-          <Add productId={product._id!} variantId={'"00000000-0000-0000-0000-000000000000'} stockNumber={product.stock?.quantity || 0}/>
+          <Add
+            productId={product._id!}
+            variantId={'"00000000-0000-0000-0000-000000000000'}
+            stockNumber={product.stock?.quantity || 0}
+          />
         )}
 
         <div className="bg-gray-100 h-[2px]" />
@@ -86,9 +94,7 @@ async function SinglePage({ params }: { params: { slug: string } }) {
         // <Suspense fallback="Loading...">
         //   <Reviews productId={product._id!} />
         // </Suspense> */}
-      
       </div>
-      
     </div>
   );
 }
